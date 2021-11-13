@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap");
+* {
+  font-family: Inter, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+  height: 50px;
+  background: #b43c3c;
+}
+
+header #balance {
+  border: 1px #3b0000 solid;
+  color: white;
+  font-size: x-large;
+  font-weight: 700;
+  border-radius: 5px;
+  min-width: 100px;
+  padding: 0 10px;
+  height: 40px;
+  background: #770000;
+}
+
+.overlay {
+  border-radius: 5px;
+  width: 100%;
+  background: #3b4639;
+}
+
+.contain {
+  overflow: hidden;
+  width: calc(clamp(180px, 100%, 600px) - 2rem);
+  position: absolute;
+}
+
+#progress {
+  background: red;
+  /* default color */
+  width: 30%;
+  height: 50px;
+  /* "to left" / "to right" - affects initial color */
+  background: linear-gradient(to right, salmon 50%, lightblue 50%) left;
+  background-size: 200%;
+  position: absolute;
+  top: 60px;
+  transition: 15s linear;
+}
+
+.translate {
+  background-position: right;
+}
+
+body {
+  background: rgba(9, 12, 10, 0.932);
+}
+
+body #content {
+  margin: auto;
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  grid-template-columns: 400px 1fr 300px;
+}
+
+body #content #button-panel-inner {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  place-items: center;
+  color: white;
+  font-weight: 100;
+}
+
+body #content #button-panel-inner .button {
+  width: 100%;
+  height: 40px;
+  background: wheat;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+
+body #content #button-panel-inner .button p {
+  width: calc(100% - 60px);
+}
+
+body #content #button-panel-inner .button:hover {
+  cursor: pointer;
+  opacity: 80%;
+}
+
+body #content #button-panel-inner .wide {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+body #content #button-panel-inner .wide p {
+  width: calc(100% - 120px);
+  margin-right: 60px;
+}
+
+body #content #button-panel-inner .multi {
+  width: 50px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.404);
+}
+
+body #content #game-display {
+  height: 800px;
+}
+
+body #content #history-display {
+  overflow-y: scroll;
+}
+
+body #content #history-display-inner {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px;
+  gap: 1px;
+  color: white;
+  font-weight: 100;
+}
+
+body #content #history-display-inner p {
+  width: 100%;
+  background: #555e46;
+  height: 30px;
+}
+
+#rotate {
+  transition: all 7s cubic-bezier(0, 1, 0.74, 1);
+  overflow: hidden;
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  transform: rotate(0);
+}
+
+.notransition {
+  transition: none !important;
+}
