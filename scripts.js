@@ -1,7 +1,7 @@
 const balance_display = document.getElementById("balance");
 
 let balance = 1000.00;
-let lastRes = "", lastCol="";
+let lastRes, lastCol;
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -14,9 +14,38 @@ let formatter = new Intl.NumberFormat('en-US', {
 let low=0,high=0,red=0,black=0,king=0,ace=0,joker=0;
 
 function onButtonClick(button) {
-    addBet(parseFloat(document.getElementById("bet-amount").value), button.id)
-    document.getElementById("progress").classList.add("translate");
+    let value = document.getElementById("bet-amount").value;
+    if (isNaN(value)) {
+        alert("Invalid Bet Amount!")
+    } else {
+        addBet(parseFloat(value), button.id)
+        document.getElementById("progress").classList.add("translate");
+    }
 }
+
+
+
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+     
+      //obj.innerText = Math.floor(progress * (end - start) + start);
+     
+     
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+  
+  const obj = document.getElementById("value");
+  animateValue(obj, 0, 1220, 5000);
+  
+  const obj2 = document.getElementById("value2");
+  animateValue(obj2, 0, 520, 5000);
 
 const w = document.getElementById('rotate'), d=document.getElementById('displayer');
 const c = [
@@ -33,7 +62,7 @@ let ca = 0, cv = 0, cd = false;
 })();
 
 function spin() {
-    spinToNumber(Math.floor(Math.random()*25));
+    //spinToNumber(Math.floor(Math.random()*25));
 }
 
 function spinToNumber(index) {
@@ -114,7 +143,6 @@ function payout() {
     }
     balance_display.innerText = formatter.format(balance);
 }
-
 function startCountDown() {
     //document.getElementById("progress").classList.remove("translate");
     payout();
@@ -123,3 +151,47 @@ function startCountDown() {
     d.innerText="Spinning in 15s";
     setTimeout(spin, 15000);
 }
+const ele = document.getElementById("bet-input");
+ele.addEventListener('keypress', function (e) {
+    // Get the code of pressed key
+    const key = e.key;
+    if ((isNaN(key) && key !=".")||key==" ") {
+        e.preventDefault();
+    }
+});
+let currentValue = ele.value || '';
+
+ele.addEventListener('input', function (e) {
+    const target = e.target;
+
+    // If users enter supported character (digits or space)
+    ///^[0-9\s]*$/.test(target.value)
+    const key = target.value;
+    !((isNaN(key) && key !=".")||key==" ")
+        ? // Backup the current value
+          (currentValue = target.value)
+        : // Otherwise, restore the value
+          // Note that in this case, `e.preventDefault()` doesn't help
+          (target.value = currentValue);
+});
+let selection = {};
+
+ele.addEventListener('keydown', function (e) {
+    const target = e.target;
+    selection = {
+        selectionStart: target.selectionStart,
+        selectionEnd: target.selectionEnd,
+    };
+});
+ele.addEventListener('input', function (e) {
+    const target = e.target;
+    const key = target.value;
+    if (!(isNaN(key) && key !=".")||key==" ") {
+        currentValue = key;
+    } else {
+        // Users enter the not supported characters
+        // Restore the value and selection
+        target.value = currentValue;
+        target.setSelectionRange(selection.selectionStart, selection.selectionEnd);
+    }
+});
